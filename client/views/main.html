@@ -1,0 +1,46 @@
+<head>
+  <title>42do.images</title>
+</head>
+
+<body>
+  {{> body}}
+</body>
+
+<template name="body">
+  {{renderPage layoutName}}
+</template>
+
+<template name='main'>
+   {{loginButtons}}
+    <div class='container workspace'>
+      <div class='row'>
+        <div class='span12'><p>all</p></div>
+      </div>
+    </div>
+</template>
+
+<template name='user'>
+   {{> navbar}}
+    <div class='container workspace'>
+      <div class='row'>
+        <div class='span12'><p>user</p></div>
+      </div>
+    </div>
+   {{> footer}}
+</template>
+
+<template name="404">
+<p>404</p>
+</template>
+<template name="footer">
+  <footer class="container">
+    <hr class="featurette-divider"/>
+    <p class="pull-right">
+      <a href=""> Вверх</a>
+    </p>
+    <p>© 2013 42DO
+      <a href="#"> Privacy</a>.
+      <a href="#"> Terms</a>
+    </p>
+  </footer>
+</template>

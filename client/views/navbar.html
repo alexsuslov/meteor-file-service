@@ -1,0 +1,6 @@
+<template name="navbar"><div class="navbar-wrapper"><div class="container"><div class="navbar navbar-inverse"><div class="navbar-inner"><button type="button" data-toggle="collapse" data-target=".nav-collapse" class="btn btn-navbar"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><div class="brand">{{loginButtons}}</div><a href="/" class="brand">@42do.ru</a><div class="nav-collapse collapse"><ul class="nav">{{#each list}}
+{{#if isDropdown}}<li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">{{displayName}}<b class="caret"></b></a><ul class="dropdown-menu">{{#each dropdown}}
+{{#if isDivider}}<li class="{{class}}"></li>{{else}}
+{{#if isHeader}}<li class="{{class}}">{{displayName}}</li>{{else}}<li class="{{class}}"><a href="{{href}}" class="pre">{{displayName}}</a></li>{{/if}}
+{{/if}}</ul>{{/each}}</li>{{else}}<li class="{{class}}"><a href="{{href}}" class="pre">{{displayName}}</a></li>{{/if}}
+{{/each}}</ul></div></div></div></div></div></template>

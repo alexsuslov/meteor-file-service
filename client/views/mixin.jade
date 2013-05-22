@@ -1,0 +1,22 @@
+mixin carouselItem
+  .item(class='{{class}}')
+    img(src='{{background}}')
+    .container
+      .carousel-caption
+        h1 {{name}}
+        p.lead {{caption}}
+        a.btn.btn-large.btn-primary(href='{{href}}') {{button}}
+
+mixin marketingCicle
+  .span4
+    img.img-circle(data-src="holder.js/140x140", alt="140x140", style="width: 140px; height: 140px;", src='{{image}}')
+    h2 {{displayName}}
+    p {{content}}
+
+mixin featurette
+  hr.featurette-divider
+  .featurette
+    img.featurette-image(src='{{image}}',class='{{_class}}')
+    h2.featurette-heading {{displayName}}
+    p.lead {{content}}
+    a.btn.btn-large.btn-primary(href='{{href}}') {{button}}

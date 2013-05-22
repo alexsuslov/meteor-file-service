@@ -1,0 +1,38 @@
+template(name='navbar')
+  .navbar-wrapper
+    .container
+      .navbar.navbar-inverse
+        .navbar-inner
+          button.btn.btn-navbar(type="button", data-toggle="collapse", data-target=".nav-collapse")
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          .brand {{loginButtons}}
+          a.brand(href='/') @42do.ru
+
+          .nav-collapse.collapse
+            ul.nav {{#each list}}
+              {{#if isDropdown}}
+              li(class='dropdown')
+                a.dropdown-toggle(href='#',data-toggle="dropdown") {{displayName}}
+                  b.caret
+                ul.dropdown-menu{{#each dropdown}}
+                  {{#if isDivider}}
+                  li(class='{{class}}')
+                  {{else}}
+                  {{#if isHeader}}
+                  li(class='{{class}}') {{displayName}}
+                  {{else}}
+                  li(class='{{class}}')
+                    a.pre(href='{{href}}') {{displayName}}
+                  {{/if}}
+                  {{/if}}
+                {{/each}}
+              {{else}}
+              li(class='{{class}}')
+                a.pre(href='{{href}}') {{displayName}}
+              {{/if}}
+              {{/each}}
+
+
+
