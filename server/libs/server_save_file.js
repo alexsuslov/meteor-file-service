@@ -4,18 +4,23 @@
  */
 Meteor.methods({
   saveFile: function(blob, name, path, encoding) {
-    // console.log(name);
     var path = cleanPath(path)
       , fs = Npm.require('fs')
       , name = cleanName(name || 'file')
       , encoding = encoding || 'binary'
-      , chroot = Meteor.chroot || 'public';
+      , upPath = 'public'
+      
     // Clean up the path. Remove any initial and final '/' -we prefix them-,
     // any sort of attempt to go to the parent directory '..' and any empty directories in
     // between '/////' - which may happen after removing '..'
 
+    if (!fs.existsSync('public')){
+      upPath = 'bundle/static';
+    }    
+    var chroot = Meteor.chroot || upPath;
     path = chroot + (path ? '/' + path + '/' : '/');
     mkdirPath = ''
+
     path.split("/").forEach(function(name){
       mkdirPath += name;
       if (!fs.existsSync(mkdirPath)){

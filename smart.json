@@ -2,9 +2,8 @@
   "packages": {
     "canvas-image-manipulation": {},
     "router": {},
-    "collectionFS": {},
     "crypto-base": {},
     "crypto-md5": {},
-    "belt-flash": {}
+    "environment-hooks": {}
   }
 }
