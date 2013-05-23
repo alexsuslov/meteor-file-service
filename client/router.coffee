@@ -5,11 +5,11 @@ if Meteor.isClient
         'user'
       else
         'main'
-    '/images': 'images'
+    '/files': 'files'
 
-    '/image/:name': (name)->
-      Session.set 'image', name
-      'image'
+    '/file/:name': (name)->
+      Session.set 'file', name
+      'file'
     '/admin': 'admin'
 
   Template.body.helpers

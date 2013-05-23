@@ -1,0 +1,39 @@
+template(name='file')
+  hr
+  .form-horizontal
+    .control-group
+      label Tags
+      .control
+        input#tags(type='text',value='{{tags}}')
+    .control-group
+      input#fileUploader(type='file',name="file")
+      button.btn.Upload.pull-right Загрузить
+  hr
+template(name='files')
+  .container.workspace
+    .row
+      .span12
+        .control-group
+          a.fast.btn.pre(href='#')
+            i.icon-plus-sign
+            | Файл
+          .form-search.pull-right
+            .input-append
+              input#filter.span2.search-query(type="text",value='{{tags}}')
+              button#filter.btn Тег Фильтр
+        {{#if fast}}
+        {{> file}}
+        {{/if}}
+        ul.unstyled {{#each Files}}
+          li.control-group
+            a.btn.edit(href='/edit/{{_id}}')
+              i.icon-edit
+            | &nbsp;
+            a(href='{{path}}/{{filename}}') {{filename}}
+            | &nbsp; {{tags}}
+            button.btn.rm.pull-right
+              i.icon-remove
+          {{else}}
+          li No files uploaded.
+          {{/each}}
+

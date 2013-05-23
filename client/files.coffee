@@ -1,51 +1,66 @@
 self= @
-# Use session for setting filter options
-Session.setDefault "imagesFilter",
-  completed: true
-  limit: 30
+Meteor.subscribe "files"
 
-# Make subscription depend on the current filter
-# Deps.autorun ->
-  # filter = Session.get("imagesFilter")
-  # Meteor.subscribe "imagesFS", filter
+Template.file.events
+  'keyup: #tags':(e)->
+    Session.set 'tags', e.target.val()
 
-Template.image.events
-  "change .fileUploader": (e) ->
-    console.log e
-    # files = e.target.files
-    # i = 0
-    # f = undefined
+  "click .Upload": (e) ->
+    srcElement = $('#fileUploader')[0]
+    e.preventDefault()
+    if Meteor.userId()
+      tags = $('#tags').val()
+      _.each srcElement.files, (file)->
+        reader = new FileReader()
+        addFile = (objFile)->
+          unless self.files.findOne( $or:[hash: objFile.hash, name: file.name] )
+            self.files.insert objFile
+          else
+            console.log 'error file exist!'
 
-    # while f = files[i]
-    #   self.imagesFS.storeFile f
-    #   i++
+        reader.onload = ()->
+          md5 = CryptoJS.MD5(reader.result).toString()
 
-# Template.images.helpers
-#   Files: ->
-#     self.imagesFS.find {},
-#       sort:
-#         uploadDate: -1
+          objFile =
+            hash: md5
+            filename: file.name
+            path:  file.type
+            tags: tags
+            owner: Meteor.userId()
+          addFile objFile
+          Meteor.saveFile(file, file.name, file.type)
 
-  # view: (item)->
-  #   console.log item
-  #   id = item._id
-  #   self.imagesFS.retrieveBlob id, (fileItem)->
-  #     if (fileItem.blob)
-  #       file = fileItem.blob
-  #     else
-  #       file = fileItem.file
-  #     item =
-  #       filename:fileItem.filename
-  #       file:file
-  #     console.log item
+        reader.onerror = ()->
+            console.error "Could not read the file"
+        reader.readAsBinaryString file
 
+Template.file.tags = ->
+  Session.get 'tags'
+###
+Files
+###
 
-Template.images.events
-  "click .btnFileSaveAs": (e)->
-    console.log e
-    # self.imagesFS.retrieveBlob @_id, (fileItem) ->
-    #   console.log fileItem
-    #   if fileItem.blob
-    #     self.saveAs fileItem.blob, fileItem.filename
-    #   else
-    #     self.saveAs fileItem.file, fileItem.filename
+Template.files.events
+  'click button#filter':(e)->
+    Session.set 'filter', $('input#filter').val()
+  'click a.fast':(e)->
+    e.preventDefault()
+    opt = 'fastFile'
+    if Session.get opt
+      Session.set opt, false
+    else
+      Session.set opt, true
+  "click .rm": (e) ->
+    self.files.remove @_id
+
+Template.files.fast = ()->
+  Session.get 'fastFile'
+
+Template.files.Files = ()->
+  search = {}
+  limit= limit:50
+  filter = Session.get 'filter'
+  if filter
+    re = new RegExp(filter ,'gi')
+    search = tags:re
+  self.files.find(search, limit)

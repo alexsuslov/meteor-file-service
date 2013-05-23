@@ -19,23 +19,23 @@ Template.navbar.list = ()->
     list.push menu unless menu.hide
   list
 
-Session.set 'navbar',
-    orders:
-      displayName:'Файлы'
-      class:'dropdown'
-      dropdown:[
-        {
-          displayName:'Новый'
-          href:'/image/new'
+# Session.set 'navbar',
+#     orders:
+#       displayName:'Файлы'
+#       class:'dropdown'
+#       dropdown:[
+#         {
+#           displayName:'Новый'
+#           href:'/file/new'
 
-        }
-        {
-          class:'divider'
-        }
-        {
-          displayName:'Список'
-          href:'/images'
-        }
-      ]
+#         }
+#         {
+#           class:'divider'
+#         }
+#         {
+#           displayName:'Список'
+#           href:'/files'
+#         }
+#       ]
 
 
