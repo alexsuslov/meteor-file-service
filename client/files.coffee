@@ -8,9 +8,10 @@ Template.file.events
   "click .Upload": (e) ->
     srcElement = $('#fileUploader')[0]
     e.preventDefault()
-    if Meteor.userId()
+    if Meteor.userId() and srcElement.files
       tags = $('#tags').val()
       _.each srcElement.files, (file)->
+        console.log file
         reader = new FileReader()
         addFile = (objFile)->
           unless self.files.findOne( $or:[hash: objFile.hash, name: file.name] )
