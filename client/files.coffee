@@ -1,4 +1,5 @@
 self= @
+fileSize = 5*1024*1024
 Meteor.subscribe "files"
 
 Template.file.events
@@ -11,30 +12,31 @@ Template.file.events
     if Meteor.userId() and srcElement.files
       tags = $('#tags').val()
       _.each srcElement.files, (file)->
-        console.log file
-        reader = new FileReader()
-        addFile = (objFile)->
-          unless self.files.findOne( $or:[hash: objFile.hash, name: file.name] )
-            self.files.insert objFile
-          else
-            console.log 'error file exist!'
+        if @file.size < fileSize
+          reader = new FileReader()
+          addFile = (objFile)->
+            unless self.files.findOne( $or:[hash: objFile.hash, name: file.name] )
+              self.files.insert objFile
+            else
+              console.log 'error file exist!'
 
-        reader.onload = ()->
-          md5 = CryptoJS.MD5(reader.result).toString()
+          reader.onload = ()->
+            md5 = CryptoJS.MD5(reader.result).toString()
 
-          objFile =
-            hash: md5
-            filename: file.name
-            path:  file.type
-            tags: tags
-            owner: Meteor.userId()
-          addFile objFile
-          Meteor.saveFile(file, file.name, file.type)
+            objFile =
+              hash: md5
+              filename: file.name
+              path:  file.type
+              tags: tags
+              owner: Meteor.userId()
+            addFile objFile
+            Meteor.saveFile(file, file.name, file.type)
 
-        reader.onerror = ()->
-            console.error "Could not read the file"
-        reader.readAsBinaryString file
-
+          reader.onerror = ()->
+              console.error "Could not read the file"
+          reader.readAsBinaryString file
+        else
+          console.error "file to math!"
 Template.file.tags = ->
   Session.get 'tags'
 ###
