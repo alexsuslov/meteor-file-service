@@ -10,8 +10,7 @@
       "router": {},
       "crypto-base": {},
       "crypto-md5": {},
-      "environment-hooks": {},
-      "filer": {}
+      "environment-hooks": {}
     },
     "packages": {
       "canvas-image-manipulation": {
@@ -38,11 +37,6 @@
         "git": "https://github.com/possibilities/meteor-environment-hooks.git",
         "tag": "v0.0.2",
         "commit": "ec214129464e49b9cdb081ccb3d50ed8930722be"
-      },
-      "filer": {
-        "git": "https://github.com/limeyd/meteor-filer.git",
-        "tag": "v0.0.4",
-        "commit": "2e018f4c677cf6d2593c2c681ca25eaeb864a1c7"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
