@@ -1,6 +1,5 @@
 {
   "packages": {
-    "canvas-image-manipulation": {},
     "router": {},
     "crypto-base": {},
     "crypto-md5": {},
