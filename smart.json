@@ -4,7 +4,6 @@
     "router": {},
     "crypto-base": {},
     "crypto-md5": {},
-    "environment-hooks": {},
-    "filer": {}
+    "environment-hooks": {}
   }
 }
