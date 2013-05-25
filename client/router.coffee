@@ -7,6 +7,12 @@ if Meteor.isClient
         'main'
     '/files': 'files'
 
+    '/print/:name': (name)->
+      Session.set 'file', name
+      'printView'
+    '/view/:name': (name)->
+      Session.set 'file', name
+      'fileView'
     '/file/:name': (name)->
       Session.set 'file', name
       'file'
