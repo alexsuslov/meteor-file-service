@@ -1,3 +1,27 @@
+template(name='link')
+  .container.workspace
+    .row
+      .span12
+        a(href='files/{{path}}/{{filename}}') {{filename}}
+        hr
+        | [{{filename}}]: {{url}}files/{{path}}/{{filename}}
+
+
+template(name='printView')
+  {{rend}}
+  .container.workspace
+    .row
+      .span12
+        {{{content}}}
+
+template(name='fileView')
+  {{> navbar}}
+  {{rend}}
+  .container.workspace
+    .row
+      .span12
+        {{{content}}}
+  {{> footer}}
 template(name='file')
   hr
   .form-horizontal
@@ -26,10 +50,10 @@ template(name='files')
         {{/if}}
         ul.unstyled {{#each Files}}
           li.control-group
-            a.btn.edit(href='/edit/{{_id}}')
+            a.btn.edit(href='files/{{path}}/{{filename}}')
               i.icon-edit
             | &nbsp;
-            a(href='{{path}}/{{filename}}') {{filename}}
+            a(href='view/{{filename}}') {{filename}}
             | &nbsp; {{tags}}
             button.btn.rm.pull-right
               i.icon-remove
