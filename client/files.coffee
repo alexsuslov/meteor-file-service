@@ -29,7 +29,7 @@ Template.file.events
         if file.size < fileSize
           reader = new FileReader()
           addFile = (objFile)->
-            unless self.files.findOne( $or:[hash: objFile.hash, name: file.name] )
+            unless self.files.findOne( $or:[hash: objFile.hash, filename: objFile.filename] )
               self.files.insert objFile
             else
               Session.set 'fileErr', 'error file exist!'

@@ -4,21 +4,21 @@
  */
 var fs = Npm.require('fs');
 
-Meteor.startup(function () {
-  // Create upload dir
-  if (!fs.existsSync('upload')){
-    console.log('Upload path don\'t exists. Create new one.');
-    fs.mkdir('upload');
-  }
-  if (fs.existsSync('public') && !fs.existsSync('public/files') ){
-    console.log('Upload link don\'t exists. Create new one.');
-    fs.linkSync('./upload', './public/files');
-  }
-  if (fs.existsSync('bundle/static') && !fs.existsSync('bundle/static/files') ){
-    console.log('Upload link don\'t exists. Create new one.');
-    fs.linkSync('./upload', 'bundle/static/files');
-  }
-});
+// Meteor.startup(function () {
+//   // Create upload dir
+//   if (!fs.existsSync('upload')){
+//     console.log('Upload path don\'t exists. Create new one.');
+//     fs.mkdir('upload');
+//   }
+//   if (fs.existsSync('public') && !fs.existsSync('public/files') ){
+//     console.log('Upload link don\'t exists. Create new one.');
+//     fs.linkSync('./upload', './public/files');
+//   }
+//   if (fs.existsSync('bundle/static') && !fs.existsSync('bundle/static/files') ){
+//     console.log('Upload link don\'t exists. Create new one.');
+//     fs.linkSync('./upload', 'bundle/static/files');
+//   }
+// });
 
 Meteor.methods({
   saveFile: function(blob, name, path, encoding) {
