@@ -9,7 +9,8 @@
       "router": {},
       "crypto-base": {},
       "crypto-md5": {},
-      "environment-hooks": {}
+      "environment-hooks": {},
+      "marked": {}
     },
     "packages": {
       "router": {
@@ -31,6 +32,11 @@
         "git": "https://github.com/possibilities/meteor-environment-hooks.git",
         "tag": "v0.0.2",
         "commit": "ec214129464e49b9cdb081ccb3d50ed8930722be"
+      },
+      "marked": {
+        "git": "https://github.com/chuangbo/meteor-marked.git",
+        "tag": "v0.2.8.2",
+        "commit": "f5d9d6dbc013ad1bd568fa610eb4d8a479943f18"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

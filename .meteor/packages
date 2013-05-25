@@ -13,5 +13,5 @@ crypto-md5
 bootstrap
 coffeescript
 accounts-ui
-showdown
 filer
+marked

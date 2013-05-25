@@ -1,6 +1,17 @@
 self = @
 Meteor.subscribe "files"
-converter = new Showdown.converter()
+
+marked.setOptions
+  gfm: true
+  tables: true
+  breaks: false
+  pedantic: false
+  sanitize: true
+  smartLists: true
+  langPrefix: "language-"
+  highlight: (code, lang) ->
+    return highlighter.javascript(code)  if lang is "js"
+    code
 
 link = (objFile)->
   Session.set 'content', Template.link objFile
@@ -10,7 +21,8 @@ markdown = (objFile)->
   Meteor.call 'getFile', objFile, (err,resp)->
     console.log err if err
     if resp
-      Session.set 'content', converter.makeHtml resp
+
+      Session.set 'content', "<div class=\"md\">" + marked( resp) + "</div>"
 
 Template.printView.content = Template.fileView.content = ()->
   Session.get 'content'

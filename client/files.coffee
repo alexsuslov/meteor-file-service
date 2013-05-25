@@ -13,7 +13,8 @@ createType = (file)->
       'text/x-markdown'
 
 Template.file.events
-  # 'keyup: #tags':(e)->
+
+
   #   Session.set 'tags', e.target.val()
 
   "click .Upload": (e) ->
@@ -29,10 +30,16 @@ Template.file.events
         if file.size < fileSize
           reader = new FileReader()
           addFile = (objFile)->
-            unless self.files.findOne( $or:[hash: objFile.hash, filename: objFile.filename] )
-              self.files.insert objFile
+            same_hash =
+
+            unless self.files.findOne( filename:objFile.filename)
+              same_hash = self.files.findOne( hash:objFile.hash)
+              unless self.files.findOne( hash:objFile.hash)
+                self.files.insert objFile
+              else
+                Session.set 'fileErr', 'Такой файл уже есть. Под другим именем : ' + same_hash.filename
             else
-              Session.set 'fileErr', 'error file exist!'
+              Session.set 'fileErr', 'Файл уже есть!'
           reader.onload = ()->
 
             md5 = CryptoJS.MD5(reader.result).toString()
@@ -71,6 +78,10 @@ Files
 ###
 
 Template.files.events
+  'keyup input#filter':(e)->
+    e.preventDefault()
+    Session.set 'filter', $('input#filter').val() if e.keyCode is 13
+
   'click button#filter':(e)->
     Session.set 'filter', $('input#filter').val()
   'click a.fast':(e)->
