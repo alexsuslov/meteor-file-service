@@ -2,6 +2,16 @@ self= @
 fileSize = 5*1024*1024
 Meteor.subscribe "files"
 
+createType = (file)->
+  if file.type
+    file.type
+  else
+    # type from extention
+    re = /(?:\.([^.]+))?$/
+    ext = re.exec(file.name)[1]
+    if ext is 'md' or ext is 'markdown'
+      'text/x-markdown'
+
 Template.file.events
   # 'keyup: #tags':(e)->
   #   Session.set 'tags', e.target.val()
@@ -24,16 +34,24 @@ Template.file.events
             else
               Session.set 'fileErr', 'error file exist!'
           reader.onload = ()->
+
             md5 = CryptoJS.MD5(reader.result).toString()
+            type = createType file
+            # file info
 
             objFile =
               hash: md5
               filename: file.name
-              path:  file.type
+              type: type
+              path: type
               tags: tags
               owner: Meteor.userId()
+
+
+            # add file info to mongo db
             addFile objFile
-            Meteor.saveFile(file, file.name, file.type)
+            # upload file
+            Meteor.saveFile(file, file.name, type)
 
           reader.onerror = ()->
             Session.set 'fileErr', "Could not read the file"
