@@ -2,12 +2,12 @@ template(name='file')
   hr
   .form-horizontal
     .control-group
-      label Tags
-      .control
-        input#tags(type='text',value='{{tags}}')
-    .control-group
       input#fileUploader(type='file',name="file")
       button.btn.Upload.pull-right Загрузить
+  {{#if err}}
+  .err
+    span.label.label-warning {{err}}
+   {{/if}}
   hr
 template(name='files')
   .container.workspace

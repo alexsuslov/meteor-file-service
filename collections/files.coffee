@@ -14,5 +14,5 @@ self = @
 
 if Meteor.isServer
   Meteor.publish "files", ()->
-    self.files.find({},sort:filename:1)
+    self.files.find({},sort:_id:1)
 

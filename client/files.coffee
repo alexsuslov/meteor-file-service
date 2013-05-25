@@ -3,23 +3,26 @@ fileSize = 5*1024*1024
 Meteor.subscribe "files"
 
 Template.file.events
-  'keyup: #tags':(e)->
-    Session.set 'tags', e.target.val()
+  # 'keyup: #tags':(e)->
+  #   Session.set 'tags', e.target.val()
 
   "click .Upload": (e) ->
-    srcElement = $('#fileUploader')[0]
     e.preventDefault()
+    srcElement = $('#fileUploader')[0]
+    Session.set 'fileErr', false
     if Meteor.userId() and srcElement.files
-      tags = $('#tags').val()
+      tags = $('input#filter').val()
+      if tags
+        Session.set 'filter', tags
       _.each srcElement.files, (file)->
-        if @file.size < fileSize
+
+        if file.size < fileSize
           reader = new FileReader()
           addFile = (objFile)->
             unless self.files.findOne( $or:[hash: objFile.hash, name: file.name] )
               self.files.insert objFile
             else
-              console.log 'error file exist!'
-
+              Session.set 'fileErr', 'error file exist!'
           reader.onload = ()->
             md5 = CryptoJS.MD5(reader.result).toString()
 
@@ -33,12 +36,18 @@ Template.file.events
             Meteor.saveFile(file, file.name, file.type)
 
           reader.onerror = ()->
-              console.error "Could not read the file"
+            Session.set 'fileErr', "Could not read the file"
           reader.readAsBinaryString file
         else
-          console.error "file to math!"
-Template.file.tags = ->
-  Session.get 'tags'
+          Session.set 'fileErr', 'Ошибка! Файл больше 5Мб.'
+          console.log "file to math!"
+
+Template.file.err = ->
+  Session.get 'fileErr'
+
+Template.files.tags = ->
+  Session.get 'filter'
+
 ###
 Files
 ###
